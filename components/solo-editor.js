@@ -16,7 +16,7 @@ function SoloEditor({ children }) {
 const Wrapper = styled.div`
   box-shadow: rgb(0 0 0 / 50%) 0px 2px 10px 0px;
   background-color: hsl(0, 0%, 10%);
-  max-width: 600px;
+  max-width: 700px;
   width: 100%;
 `;
 

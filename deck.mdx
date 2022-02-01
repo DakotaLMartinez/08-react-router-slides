@@ -6,6 +6,7 @@ import LiveEditor from "./components/live-editor";
 import SoloEditor from "./components/solo-editor";
 import { Logo } from "./components/shared";
 import reactUsage from "./assets/react-usage.png";
+import CodeSandbox from "./components/CodeSandbox";
 
 
 import baseTheme from "./theme";
@@ -14,7 +15,7 @@ export const theme = baseTheme;
 
 
 <Head>
-  <title>Slides | Intro to React</title>
+  <title>Slides | Props and Components</title>
   <link
     rel="shortcut icon"
     type="image/x-icon"
@@ -28,11 +29,17 @@ export const theme = baseTheme;
 
 <Layout>
 
-# Intro to React
+## Props and Components
 
 <Logo />
 
 </Layout>
+
+<Notes>
+
+Today, we'll be discussing props and components and we'll get started building out a project that we'll be extending throughout the rest of the phase.
+
+</Notes>
 
 <!-- End Slide -->
 
@@ -56,13 +63,15 @@ If you have any questions throughout lecture and you want to make sure they don'
 
 # ✅ Objectives
 
-We'll learn...
-
 <Steps>
 
-- Why you should learn React
-- React's philosophy
-- How React works
+- Identify components from a wireframe
+- Build a component hierarchy from a wireframe
+- Use props to pass information from one component to another
+- Destructure props to indicate what key value pairs we expect
+- Create dynamic components using props
+- Iterate through an array to render multiple components
+- Use JavaScript import/export to create modularity in a React app
 
 </Steps>
 
@@ -72,148 +81,81 @@ We'll learn...
 
 Our goal today will be to talk about ⬇️ 
 
-- Why you should learn react ⬇️ 
-
-- A bit about React's philosophy ⬇️ 
-
-- and a high level discussion of how React works
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-# 🤔 Why React?
-
-<img src={reactUsage} alt="component diagram" style={{ height: "600px" }} />
-
-_&mdash; [Frontend Framework Usage, 2020 State of JS Survey](https://2020.stateofjs.com/en-US/technologies/front-end-frameworks/)_
-
-</Layout>
-
-<Notes>
-
-- One key reason we teach React is simply its popularity in the marketplace
-- But React is also popular for a reason
-- It solved a lot of problems developers had in the past with other frontend libraries
-- It also has some good tricks up its sleeve to solve these problems in a way that doesn't sacrifice performance
+- How to identify components from a wireframe ⬇️ 
+- How to build a component hierarchy from a wireframe ⬇️ 
+- How to use props to pass information from one component to another ⬇️ 
+- We'll practice destructuring props to indicate what key value pairs we expect from the parent component ⬇️ 
+- We'll create dynamic components using props ⬇️ 
+- Iterate through an array to render multiple components ⬇️ 
+- Use JavaScript import/export syntax to create modularity in a React app ⬇️ 
 
 </Notes>
 
 <!-- End Slide -->
 
----
+--- 
 
 <!-- Begin Slide -->
 
 <Layout>
 
-# 🤔 Why React?
-
-Writing vanilla JavaScript is hard!
-Particularly when it comes to:
-
-- Creating/Updating DOM elements
-- Code organization (separation of concerns)
-
-</Layout>
-
-<Notes>
-
-Beyond its popularity... let's talk about some more reasons react is a good tool to use.
-
-Some of the main challenges in building vanilla JS projects have to do with keeping the DOM up to date and keeping organized as the codebase grows.
-
-- If you struggled with those things while you were working on your project, you're not alone! These are hard problems, and something JS developers have struggled with for a long time
-- React gives us code to solve these problems by _abstracting_ the work of manipulating the DOM
-- It also has strong opinions about how your code should be organized
-  - If you "buy into" React's philosophy, you're gonna have a good time with React...
-  - If you fight against it, you'll struggle
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-# 💡 React Philosophy
-
-- Use **declarative syntax (JSX)**
-  - Makes it easier to work with the DOM
-  - Clearer connection between the code we write and what is displayed in the browser
-- Use **components** to break down complex UI into smaller pieces
-  - Separation of concerns
-  - Easier to maintain
-
-</Layout>
-
-<Notes>
-
-One of the key elements of React's philosophy is the use of declarative syntax.
-
-React introduced the syntax called JSX (short for javascript XML) that
-- makes it easier to work with the DOM
-- establishes a clearer connection between the code we write and what is actually displayed in the browser
-
-Another key idea in React's philosophy is to use Components to break down a complex UI into smaller and more manageable pieces.
-
-This also helps us with separation of conerns and makes our codebase easier to maintain and organize as it grows.
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-# 🎉 Declarative Syntax
-
-<iframe height="260" width="1000" src="https://docs.google.com/document/d/1nPeQ0bahVgfDKag2QB9ztRsIRs0NDAqJ9tCkeBt2iI8/edit"></iframe>
+## 📅 Agenda
 
 <Steps>
 
-Instead of describing _how to do something_...
+- Review important concepts: 
+  - create-react-app, import/export syntax, components, props &amp; fragments
+- examine a wireframe to identify components
+- examine a component hierarchy built from the wireframe
+- use the concepts we reviewed at the beginning of lecture to begin building out our application based on the wireframe and component hierarchy.
 
-<div>
-<SoloEditor>
+</Steps>
 
-```js
-const h1 = document.createElement("h1");
-h1.id = "main";
-h1.className = "blue";
-h1.textContent = "Hello!";
-```
+</Layout>
 
-</SoloEditor>
-</div>
+<!-- End Slide -->
 
-...just describe _what we want_:
+---
 
-<div>
-<SoloEditor>
+<!-- Begin Slide -->
 
-```js
-const h1 = (
-  <h1 id="main" className="blue">
-    Hello from JSX!
-  </h1>
-);
-```
+<Layout>
 
-</SoloEditor>
-</div>
+## 🔧 Create React App
+
+There are many tools designed to help us build React applications such as: 
+- [Create React App](https://create-react-app.dev/)
+- [Gatsby](https://www.gatsbyjs.com/)
+- and [NextJS](https://nextjs.org/)
+
+If you'd like to read up on different integrated toolchains, the [React Docs](https://reactjs.org/docs/create-a-new-react-app.html) are a great place to start.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+At Flatiron, we choose Create React App
+
+<img src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1643704756/pokemon-poke-ball_sownrx.gif" alt="Pikachu I choose you" style={{width: '500px', height: '300px'}} />
+
+In addition to React, it gives us:
+
+<Steps>
+
+- **Webpack**: a tool for bundling and minifying our code (along with a server for running our code in development)
+- **Babel**: a transpiler that lets us write modern JavaScript and JSX
 
 </Steps>
 
@@ -221,17 +163,7 @@ const h1 = (
 
 <Notes>
 
-(This slide has code examples that can be revealed with down arrows.)
 
-When we see the word Declarative, what does that mean? When we think of the difference between declarative and imperative code, who can describe to me or give me an example of that difference? 
-
-- (wait for and explore examples)
-- Chipotle analogy: ordering a burrito vs making one by hand (outsourcing in general)
-
-Declarative code lets us write something more _abstract_.
-
-- We don't have to worry about the low-level details of what's happening under the hood
-- We can focus more on the end result (in this case, what's being rendered to the DOM)
 
 </Notes>
 
@@ -239,17 +171,53 @@ Declarative code lets us write something more _abstract_.
 
 ---
 
+<!-- Begin Slide -->
+
 <Layout>
 
-# 🤔 But How?
+## 🔧 Create React App Details
 
-Under the hood, React apps use a tool called Babel to **transpile** the JSX syntax to valid JavaScript:
+`create-react-app` will build a project folder for our application and install all the dependencies we need (via Node Package Manager).
+
+To create a new React application and start it, run:
+
+<SoloEditor>
+
+```sh
+npx create-react-app app-name
+cd app-name
+npm start
+```
+
+</SoloEditor>
+
+> Note: You'll generally have to wait a bit for the first command to finish before doing the `cd` and `npm start`
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## 🚛 Import/Export
+
+Part of ES6 Spec, `import` and `export` are used to:
 
 <Steps>
 
-- We write JSX
-- Babel **transpiles** JSX into valid JavaScript
-- That **transpiled** code is what actually runs in the browser
+- Import code from external libraries
+- Allow us to keep our code organized in separate files with clear dependencies
+- Tell webpack how to bundle together the final code that is sent to the browser
 
 </Steps>
 
@@ -257,55 +225,13 @@ Under the hood, React apps use a tool called Babel to **transpile** the JSX synt
 
 <Notes>
 
-Under the hood, React apps use a tool called Babel to **transpile** the JSX syntax to valid JavaScript:
+In react, it's recommended that we write each of our components in its own file to help keep our code organized.
 
-(Use arrows to reveal...)
-- We write JSX
-- Babel **transpiles** JSX into valid JavaScript
-- That **transpiled** code is what actually runs in the browser
+In order to work with code written across multiple files, we can use the `import` and `export` syntax that was introduced to JavaScript as part of ES6 to: ⬇️ 
 
-Just a quick **Note**: JSX and Babel are tools that exist within the javascript ecosystem, both are usable outside of React as well.
-
-For an example of how this works -> Next Slide
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## JSX ➡️ Babel ➡️ JS
-
-<BabelRepl>
-
-```js
-const h1 = (
-  <h1 id="main" className="blue">
-    Hello from JSX!
-  </h1>
-);
-```
-
-</BabelRepl>
-
-</Layout>
-
-<Notes>
-
-In this window, the left-hand side is JSX (JavaScript XML). It looks like HTML, but it's not!
-This is a special kind of markup that we use to tell React how we want the DOM to look.
-
-We write JSX in our JavaScript files, and under the hood, Babel turns it into valid JavaScript
-code before the browser runs it. If we tried running the code on the left in the browser we'd get a syntax error.
-But after Babel is done with it, it's now valid syntax.
-
-You don't have to worry too much about this; you can just use JSX in React without thinking about it.
-But it's good to know what's happening. At the end of the day, it's all still JavaScript.
-
-Again, the details of this are not important to remember, but you do want to remember that JSX requires transpilation via babel in order to run in the browser. If you're using the create-react-app generator, then all of this is already configured for you up front, including a live updating development server!
+- Import code from external libraries ⬇️ 
+- Allow us to keep our code organized in separate files with clear dependencies (what we mean here is we can clearly see by looking at our imports what other libraries and/or code the code inside of the current file relies upon) and finally ⬇️ 
+- imports and exports are used by webpack to bundle together the final code that is sent to the browser
 
 </Notes>
 
@@ -317,24 +243,18 @@ Again, the details of this are not important to remember, but you do want to rem
 
 <Layout>
 
-# 🛠 Components
+## An Example
 
-Components are the building blocks of React. A **component** is a function that:
-
-- Takes in some **raw data (props)**
-- Returns **user interface (JSX)**
+For example, if our application looks like this:
 
 <SoloEditor>
 
-```js
-function Header(props) {
-  return (
-    <div>
-      <h3>{props.title}</h3>
-      <h4>Subtitle: {props.subtitle}</h4>
-    </div>
-  );
-}
+```txt
+├── src/
+│   ├── app.js
+│   └── index.js
+├── utils/
+│   └── math.js
 ```
 
 </SoloEditor>
@@ -343,14 +263,6 @@ function Header(props) {
 
 <Notes>
 
-Components are the building blocks of React!
-
-Simply put, a component is a function that:
-
-- takes in some raw data (in the form of an object that we call props)
-- and returns some JSX (to render part of our user interface)
-
-You can see here that we have a function called `Header` that takes an argument called props and returns a JSX element, in this case a div, including the title and subtitle properties from the `props` argument. So let's take a closer look at this.
 
 
 </Notes>
@@ -363,49 +275,427 @@ You can see here that we have a function called `Header` that takes an argument 
 
 <Layout>
 
-<LiveEditor>
+## Default Exports and Imports
+We can create and export an App component in `src/components/App.js`
 
-```js
-function Header(props) {
+<div>
+<SoloEditor>
+
+```jsx
+import React from "react"; // default import
+
+function App() {
+  return <h1>Hello!</h1>;
+}
+
+export default App; // default export
+```
+
+</SoloEditor>
+</div>
+
+And import it within our `src/index.js` file like this:
+
+<div>
+<SoloEditor>
+
+```jsx
+import ReactDOM from "react-dom";
+// there is a convention to import external dependencies first (at the top of your file), and internal dependencies last
+import App from "./App"; // default import, using the relative path to our App.js file
+
+ReactDOM.render(<App />, document.querySelector("#root"));
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Named Exports and Imports
+
+In addition to default imports/exports, you can also do named imports/exports. Typically, classes and React components are exported as the default export, and smaller utility/helper functions are exported as named exports.
+
+For example, if we have some utility functions in `utils/math.js`:
+
+<div>
+<SoloEditor>
+
+```jsx
+const add = (num1, num2) => num1 + num2;
+
+const subtract = (num1, num2) => num1 - num2;
+
+export { add, subtract }; // named export
+```
+
+</SoloEditor>
+</div>
+
+
+We can use those named exports in our `src/App.js` file like this:
+
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Named Exports and Imports, cont'd
+
+<div>
+<SoloEditor>
+
+```jsx
+// src/App.js
+import React from "react"; // default import
+import { add, subtract } from "../utils/math"; // named import
+
+function App() {
+  return <h1>1 + 2 is {add(1, 2)}</h1>;
+}
+
+export default App; // default export
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Live Example of Import/Export
+
+<CodeSandbox url="https://codesandbox.io/embed/import-export-example-fjjjf?fontsize=14&hidenavigation=1&theme=dark" />
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## ⚙️ Components
+
+At a minimum, a Component in React is any function that returns valid JSX.
+There are some things you'll need to keep in mind:
+- The name of your component function must be capitalized. This will not work:
+
+<div>
+<SoloEditor>
+
+```jsx
+function card() {
   return (
-    <div>
-      <h3>{props.title}</h3>
-      <h4>Subtitle: {props.subtitle}</h4>
+    <div id="card1" className="card">
+      <h1>hi</h1>
+      <p>wassup?</p>
     </div>
   );
 }
 
-// <Header title="Let's Learn React" subtitle="Components as JSX" />
-// is equivalent to
-// Header({title: "Let's Learn React", subtitle: "Components as function calls"})
+ReactDOM.render(<card />, document.getElementById("root"));
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+If we make this mistake, there won't be an error, we just won't see the component get rendered.
+But, there is a warning in the console that will appear in this case that gives us a hint!
+
+<CodeSandbox url="https://codesandbox.io/embed/non-capitalized-component-example-nb402?fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.js&theme=dark" height="700px" />
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## ⚙️ Component Gotchas
+
+- A component can only return _one element_. That element can have children, like this:
+
+<div>
+<SoloEditor>
+
+```jsx
+function Card() {
+  return (
+    <div id="card1" className="card">
+      <h1>hi</h1>
+      <p>wassup?</p>
+    </div>
+  );
+}
+```
+
+</SoloEditor>
+</div>
+
+- But it's not ok for the component to return multiple elements, like this:
+
+<div>
+<SoloEditor>
+
+```jsx
+function Card() {
+  return (
+    <h1>hi</h1>
+    <p>wassup?</p>
+  )
+}
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+If we make this mistake, we'll see something like this:
+<CodeSandbox url="https://codesandbox.io/embed/adjacent-elements-error-example-0t1l9?fontsize=14&hidenavigation=1&theme=dark" height="700px" />
+
+> Notice the error is giving us a hint at how to solve the problem here as well.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## 🧩 React Fragments
+
+We use React fragments in the situation where we don't want to add a bunch of wrapping divs every time we render one component from another. For example, let's say we want an `h1` and `h2` tag from our `Card` component, but we don't want them to be wrapped in a div.
+
+<div>
+<SoloEditor>
+
+```jsx
+function Card() {
+  // breaks
+  return (
+    <h1>Welcome to React!</h1>
+    <h2>Let's learn about JSX</h2>
+  )
+}
+
+function Card() {
+  // works
+  return (
+    <React.Fragment>
+      <h1>Welcome to React!</h1>
+      <h2>Let's learn about JSX</h2>
+    </React.Fragment>
+  )
+}
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Newer Syntax for React Fragments
+
+There's also a newer syntax for React fragments that is equivalent to `<React.Fragment>` but much easier to type:
+
+<div>
+<SoloEditor>
+
+```jsx
+function Card() {
+  // this also works (newer syntax for React.Fragment)
+  return (
+    <>
+      <h1>Welcome to React!</h1>
+      <h2>Let's learn about JSX</h2>
+    </>
+  )
+}
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Bug fixed by adding a React Fragment
+<CodeSandbox url="https://codesandbox.io/embed/adjacent-elements-error-solved-with-fragment-forked-4x7i0?fontsize=14&hidenavigation=1&theme=dark" />
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## 🎩 Props!
+
+When you create components, one way to make them dynamic and reusable is by passing in props. For example, if we wanted to create several cards on our page using a Card component, we could do so like this:
+
+<div>
+<SoloEditor>
+
+```jsx
+function Card(props) {
+  return (
+    <div id="card1" className="card">
+      <h1>{props.greeting}</h1>
+      <p>{props.subGreeting}</p>
+    </div>
+  );
+}
 
 ReactDOM.render(
-  <Header title="Let's Learn React" subtitle="Components" />,
+  <div>
+    <Card greeting="hi" subGreeting="hello" />
+    <Card greeting="sup" subGreeting="what's up" />
+  </div>,
   document.getElementById("root")
 );
 ```
 
-</LiveEditor>
+</SoloEditor>
+</div>
 
 </Layout>
 
 <Notes>
 
-Here's an example of a live editor within the slideshow (all possible because of React!) On the left is the code we write.
-On the right is a preview of the rendered HTML on top and the HTML code that the browser actually renders on the bottom.
 
-Think of a component like a **template** for how we want to display some data.
-
-As React developers, our job is to take some raw data (a string, an object, an array, etc) and decide
-how a user should interact with that data (how it should be displayed on the page).
-
-Components are what make that possible!
-
-The syntax might take some getting used to, but remember, in the end it's all just JavaScript.
-Think of writing `<Header props="something">` like us telling React to call the function `Header`,
-and pass one argument of an object with key-value pairs. (we could even write it out this way and it'd still work)
-
-Let's try adding a prop for Category here.
 
 </Notes>
 
@@ -417,126 +707,174 @@ Let's try adding a prop for Category here.
 
 <Layout>
 
-# 👷‍♀️ Component Composition
+## 🎩 Props!
 
-<img
-  src="https://curriculum-content.s3.amazonaws.com/react/yelp-components.png"
-  alt="component diagram"
-  style={{ height: "600px" }}
+The _props_ argument in our Card component defines an **object** that React will pass to our function when it is called, and it will use whatever attributes we add to our JSX component as key-value pairs on that props object.
+
+For example, if we were to add a `console.log` in the Card component above, we'd end up seeing this object:
+
+<div>
+<SoloEditor>
+
+```jsx
+function Card(props) {
+  console.log(props); // => { greeting: "hi", subGreeting: "hello" }
+
+  return (
+    <div id="card1" className="card">
+      <h1>{props.greeting}</h1>
+      <p>{props.subGreeting}</p>
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <Card greeting="hi" subGreeting="hello" />,
+  document.getElementById("root")
+);
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Dealing with Non-String prop values
+
+One additional note on JSX syntax and props: if you need to define attributes on a component that aren't strings, you have to wrap those values in `{}`. You can pass down any kind of data that you want to via props, even arrays, objects, and callback functions:
+
+<div>
+<SoloEditor>
+
+```jsx
+ReactDOM.render(
+  <div>
+    <Card
+      greeting="hi"
+      number={7}
+      boolean={false}
+      callback={() => console.log("call me!")}
+      object={{ key: "value" }}
+    />
+  </div>,
+  document.getElementById("root")
+);
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+# ☕️☕️☕️☕️☕️☕️☕️☕️ 
+# Break!
+# 🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Project Showcase Application
+
+<img 
+  src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1643721399/wireframe_bfc35e.png" 
+  style={{height: '800px'}}
 />
 
+What components can we break this UI into?
 </Layout>
 
 <Notes>
 
-Now, let's take a moment to talk about Component Composition
 
-The last example we saw was a simple React component, but a typical React app can have dozens or even hundreds of components.
-The great thing about components is that we can **compose** them (make them work together) to put together complex layouts.
-(Even this slideshow is just a bunch of React components!)
-
-The image here is part of Yelp's website, and an example of some of the components they might use to put together an app like this.
-Take note of how components let us:
-
-- separate different areas of concern (navigation vs map view vs list view)
-- create reusable templates (we can re-use the same code from the ResultItem component to display multiple results)
 
 </Notes>
 
 <!-- End Slide -->
 
----
+--- 
 
 <!-- Begin Slide -->
 
 <Layout>
 
-<LiveEditor>
+## Todo List for Today
 
-```js
-/* Component 1 */
-function Article(props) {
-  return (
-    <div>
-      <h3>{props.title}</h3>
-      <h4>Subtitle: {props.subtitle}</h4>
-      <hr />
-      <Comment content="First!" />
-      <Comment content="What a great article." />
-    </div>
-  );
-}
+- use create-react-app to create a new application
+- Build out components within the component hierarchy we diagrammed
+- Use exports and imports to compose those components into the proper structure
+- Export/Import data from a file called data.js and pass it as props to the appropriate component
 
-/* Component 2 */
-function Comment(props) {
-  return <p>{props.content}</p>;
-}
-
-/* Render the whole application */
-ReactDOM.render(
-  <Article title="Let's Learn React" subtitle="Components" />,
-  document.getElementById("root")
-);
-```
-
-</LiveEditor>
+Feel free to use [this google doc](https://docs.google.com/document/d/1iAtutIgh8L-WSi6TaURiAmq_S5yglduQCNx3x9qI29o/edit) to keep track of important commands that we're running and to take notes as a group while we go through this coding session.
 
 </Layout>
 
 <Notes>
 
-Here's an example of what the code looks like for composing multiple components together.
-An article can have many comments, so we're using the Comment component within the Article component.
 
-Each component is responsible for its own template, but its "parent" (whichever component returns it)
-is responsible for providing its data.
-
-We're _reusing_ the Comment component to make a couple of `<p>` tags, each with their own content.
-
-Within ReactDOM.render(), we're rendering the Article component which in turn renders the appropriate comments. When we speak of this parent child relationship, we'll be using that metaphor much like we did for DOM nodes within JS. So, the parent component is the one that renders its children. A child component is rendered by its parent.
-
-In this case, when we use the term render, we mean that the component renders the JSX we're referring to. Remember that all of our components are javascript functions, so when one component returns JSX including another component, that rendering component is the parent component and the component included in that parent is called the child component.
-
-I want to pause for a moment and ask y'all if there's anything you'd like to try here or ask about or discuss more.
 
 </Notes>
 
 <!-- End Slide -->
 
----
-
-<!-- Begin Slide -->
-
-# Understanding ReactDOM.render()
-
-<Steps>
-
-- What does `ReactDOM.render()` do?
-
-- --> inserts a react element into the DOM 
-
-- How do the arguments we pass to `ReactDOM.render()` accomplish this?
-
-- --> the first argument is the react element we'd like to render to the DOM (JSX)
-- --> the second argument is the DOM node where we want to insert that react element
-
-</Steps>
-
-<!-- End Slide -->
-
----
+--- 
 
 <!-- Begin Slide -->
 
 <Layout>
 
-# 🚗 React Roadmap
+# Component Hierarchy
+
+<img 
+  src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1643721493/component-hierarchy_zytnvg.png" 
+  style={{height: '400px'}}
+/>
 
 <Steps>
 
-- Create a static frontend site with **components** and **props** (DOM Manipulation)
-- Use **state** and **events** to make your site dynamic (Event Handling)
-- Add **side effects** and **data fetching** to communicate with a server (Network Communication)
+
+- Where does our project data fit into this diagram?
+- What does that mean for our props?
 
 </Steps>
 
@@ -544,75 +882,41 @@ I want to pause for a moment and ask y'all if there's anything you'd like to try
 
 <Notes>
 
-Your objective during week 1 of React is to learn the fundamentals of React to make a single-page application.
-We'll be building something similar to what you made in Phase 1, but with a new set of tools to make that process easier.
 
-Learning this will be challenging because you'll need to learn new syntax, as well as learning a new philosophy for how to organize your code.
-And, since at the end of the day, React is still JavaScript, you'll need your sharpest JS skills to become great React developers.
-
-Eventually, we'll again be stitching together those three pillars of javascript within our react application to:  (use arrow keys to expand)
-
-Right now, the most important thing is to start writing code, so in the next part of the lecture we'll get into a little exercise
-to practice with components, JSX and props.
 
 </Notes>
 
 <!-- End Slide -->
 
----
+--- 
 
-# The ToyTale Exercise
+<!-- Begin Slide -->
 
-<iframe src="https://codesandbox.io/embed/adoring-clarke-138zs?view=preview"
-    style={{width:'70%', height:'800px', border:0, borderRadius: '4px',overflow:'hidden'}}
-    title="adoring-clarke-138zs"
-    allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-    sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-  ></iframe>
+<Layout>
+
+## Installing and Using the React Developer Tools
+
+<iframe width="800" height="450" src="https://www.youtube.com/embed/fXRB6wgeKOo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+</Layout>
 
 <Notes>
 
-So, our exercise today is going to be to rework the HTML and JS for the Toy Tale practice code challenge so that it works within React.
 
-Here's a little preview of what we'll be working towards for the day. When our work is complete, we'll have something like this running within our dev server. So, we'll be able to see all of the toys displayed on the page. The form to add a new toy isn't going to work today, but that's okay, it's not the focus for today!
-
-The starter code in the repository is based on the html from the code challenge and still has some html in it that isn't JSX friendly. So, part of your task for the day will be to use your knowledge of how JSX differs from HTML to refactor the HTML to be valid JSX. 
 
 </Notes>
 
----
-
-# Exercise Instructions
-
-- Fork and Clone the cohort repo
-  - Navigate to 01_intro_to_react/toy_tale_react and run `npm start`
-- Activity #1: Convert HTML to JSX within src/App.js
-    - What needs to change? What's the same? 
-    - After fixing any errors in the console, use comments to begin to map out JSX elements into into separate components. No need to actually create components now, just start thinking about what pieces of JSX could be split into their own components.
-- Take 5-7 minutes for this on your own and then we'll go through it together mob-programming style
-
-
----
-
-# Exercise Instructions
-
-- Activity #2: Implement a ToyCard Component
-    - Start by hard-coding the JSX in your App component return statement
-    - Use props to make your component reusable
-    - Copy/paste data from the "toys.js" file as props and iterate over Toy objects
-      to create a ToyCard component for each one
-    - BONUS: 
-      - Import and store data from the "toys.js" file
-      - Create a "components" subdirectory + "ToyCard.js" file
-- Take 10 minutes for this on your own, feel free to ask questions as you go and then we'll review together.
+<!-- End Slide -->
 
 ---
 
 # Recap of Key Skills
 
-- Use ReactDOM.render() to add JSX elements to the DOM
+- Use create-react-app to generate a new react application
+- Use import to retrieve data from another file
+- Use props to pass data from one component to another
 - Use Components as a way of separating UI concerns splitting UI into smaller reusable pieces
-- Use JSX to render HTML elements &amp; other React components
+- Export components from their respective files and import them into other components so they're available within JSX.
 
 ---
 
@@ -630,22 +934,19 @@ The starter code in the repository is based on the html from the code challenge 
 
 ---
 
-# Installing and Using the React Developer Tools
-
-<iframe width="800" height="450" src="https://www.youtube.com/embed/fXRB6wgeKOo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
----
-
 <!-- Begin Slide -->
 
 <Layout>
 
 # 👷‍♀️ Resources
 
+- [React](https://reactjs.org/)
+- [Babel](https://babeljs.io/)
 - [React with Hooks Docs](https://reactwithhooks.netlify.app/)
-- [Babel Playground](https://babeljs.io/repl)
+- [Creating React Apps](https://reactjs.org/docs/create-a-new-react-app.html)
 - [Create React App](http://create-react-app.dev/)
-- [Dan Abramov's Blog](https://overreacted.io/)
+- [Webpack](https://webpack.js.org/)
+- [Quick Intro to Webpack](https://medium.com/the-self-taught-programmer/what-is-webpack-and-why-should-i-care-part-1-introduction-ca4da7d0d8dc)
 
 </Layout>
 
