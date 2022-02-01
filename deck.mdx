@@ -6,7 +6,7 @@ import LiveEditor from "./components/live-editor";
 import SoloEditor from "./components/solo-editor";
 import { Logo } from "./components/shared";
 import reactUsage from "./assets/react-usage.png";
-import CodeSandbox from "./components/CodeSandbox";
+// import CodeSandbox from "./components/CodeSandbox";
 
 
 import baseTheme from "./theme";
@@ -404,7 +404,19 @@ export default App; // default export
 
 ## Live Example of Import/Export
 
-<CodeSandbox url="https://codesandbox.io/embed/import-export-example-fjjjf?fontsize=14&hidenavigation=1&theme=dark" />
+<iframe
+  src="https://codesandbox.io/embed/import-export-example-fjjjf?fontsize=14&hidenavigation=1&theme=dark"
+  style={{
+    width:"100%",
+    height: '800px',
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="import-export-example"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 </Layout>
 
@@ -466,7 +478,19 @@ ReactDOM.render(<card />, document.getElementById("root"));
 If we make this mistake, there won't be an error, we just won't see the component get rendered.
 But, there is a warning in the console that will appear in this case that gives us a hint!
 
-<CodeSandbox url="https://codesandbox.io/embed/non-capitalized-component-example-nb402?fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.js&theme=dark" height="700px" />
+<iframe
+  src="https://codesandbox.io/embed/non-capitalized-component-example-nb402?fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.js&theme=dark"
+  style={{
+    width:"100%",
+    height: "700px",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="import-export-example"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 </Layout>
 
@@ -539,7 +563,21 @@ function Card() {
 <Layout>
 
 If we make this mistake, we'll see something like this:
-<CodeSandbox url="https://codesandbox.io/embed/adjacent-elements-error-example-0t1l9?fontsize=14&hidenavigation=1&theme=dark" height="700px" />
+
+<iframe
+  src="https://codesandbox.io/embed/adjacent-elements-error-example-0t1l9?fontsize=14&hidenavigation=1&theme=dark"
+  style={{
+    width:"100%",
+    height: "700px",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="import-export-example"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
+
 
 > Notice the error is giving us a hint at how to solve the problem here as well.
 
@@ -644,7 +682,20 @@ function Card() {
 <Layout>
 
 ## Bug fixed by adding a React Fragment
-<CodeSandbox url="https://codesandbox.io/embed/adjacent-elements-error-solved-with-fragment-forked-4x7i0?fontsize=14&hidenavigation=1&theme=dark" />
+
+<iframe
+  src="https://codesandbox.io/embed/adjacent-elements-error-solved-with-fragment-forked-4x7i0?fontsize=14&hidenavigation=1&theme=dark" 
+  style={{
+    width:"100%",
+    height: "800px",
+    border: 0,
+    borderRadius: "4px",
+    overflow: "hidden"
+  }}
+  title="import-export-example"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+></iframe>
 
 </Layout>
 
