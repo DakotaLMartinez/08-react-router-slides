@@ -1,5 +1,5 @@
 <!-- Begin setup -->
-
+import {useState} from 'react';
 import Layout from "./components/layout";
 import BabelRepl from "./components/babel-repl";
 import LiveEditor from "./components/live-editor";
@@ -15,7 +15,7 @@ export const theme = baseTheme;
 
 
 <Head>
-  <title>Slides | Props and Components</title>
+  <title>Slides | State and Events</title>
   <link
     rel="shortcut icon"
     type="image/x-icon"
@@ -29,7 +29,7 @@ export const theme = baseTheme;
 
 <Layout>
 
-## Props and Components
+## State and Events
 
 <Logo />
 
@@ -65,13 +65,11 @@ If you have any questions throughout lecture and you want to make sure they don'
 
 <Steps>
 
-- Identify components from a wireframe
-- Build a component hierarchy from a wireframe
-- Use props to pass information from one component to another
-- Destructure props to indicate what key value pairs we expect
-- Create dynamic components using props
-- Iterate through an array to render multiple components
-- Use JavaScript import/export to create modularity in a React app
+- Add event handlers to elements in React
+- Use the useState hook to create state variables
+- Create event handler callbacks that manipulate state
+- Trigger re-renders by setting state
+- Distinguish between props and state
 
 </Steps>
 
@@ -81,13 +79,11 @@ If you have any questions throughout lecture and you want to make sure they don'
 
 Our goal today will be to talk about ⬇️ 
 
-- How to identify components from a wireframe ⬇️ 
-- How to build a component hierarchy from a wireframe ⬇️ 
-- How to use props to pass information from one component to another ⬇️ 
-- We'll practice destructuring props to indicate what key value pairs we expect from the parent component ⬇️ 
-- We'll create dynamic components using props ⬇️ 
-- Iterate through an array to render multiple components ⬇️ 
-- Use JavaScript import/export syntax to create modularity in a React app ⬇️ 
+- How to add event listeners to elements in React ⬇️ 
+- How to use the useState hook to create state variables ⬇️ 
+- How to manipulate state within event handler ⬇️ 
+- Trigger re-renders by setting state ⬇️ 
+- How to distinguish between props and state 
 
 </Notes>
 
@@ -103,11 +99,15 @@ Our goal today will be to talk about ⬇️
 
 <Steps>
 
-- Review important concepts: 
-  - create-react-app, import/export syntax, components, props &amp; fragments
-- examine a wireframe to identify components
-- examine a component hierarchy built from the wireframe
-- use the concepts we reviewed at the beginning of lecture to begin building out our application based on the wireframe and component hierarchy.
+- Review app code and changes from yesterday 
+- Review React Docs on Events
+- Handle events and introduce state by creating a click counter
+- Use the useState hook to create a state variable
+- The "gotchas":
+  - Show that setState is asynchronous
+  - Using setState with value vs function
+  - Stale closures
+  - Examples
 
 </Steps>
 
@@ -121,14 +121,11 @@ Our goal today will be to talk about ⬇️
 
 <Layout>
 
-## 🔧 Create React App
+## Deliverables
 
-There are many tools designed to help us build React applications such as: 
-- [Create React App](https://create-react-app.dev/)
-- [Gatsby](https://www.gatsbyjs.com/)
-- and [NextJS](https://nextjs.org/)
-
-If you'd like to read up on different integrated toolchains, the [React Docs](https://reactjs.org/docs/create-a-new-react-app.html) are a great place to start.
+- Toggle Dark Mode Button Text on click
+- Exercise Add a 'like' button to each project card
+- Filter by project name
 
 </Layout>
 
@@ -146,555 +143,9 @@ If you'd like to read up on different integrated toolchains, the [React Docs](ht
 
 <Layout>
 
-At Flatiron, we choose Create React App
-
-<img src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1643704756/pokemon-poke-ball_sownrx.gif" alt="Pikachu I choose you" style={{width: '500px', height: '300px'}} />
-
-In addition to React, it gives us:
-
-<Steps>
-
-- **Webpack**: a tool for bundling and minifying our code (along with a server for running our code in development)
-- **Babel**: a transpiler that lets us write modern JavaScript and JSX
-
-</Steps>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## 🔧 Create React App Details
-
-`create-react-app` will build a project folder for our application and install all the dependencies we need (via Node Package Manager).
-
-To create a new React application and start it, run:
-
-<SoloEditor>
-
-```sh
-npx create-react-app app-name
-cd app-name
-npm start
-```
-
-</SoloEditor>
-
-> Note: You'll generally have to wait a bit for the first command to finish before doing the `cd` and `npm start`
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## 🚛 Import/Export
-
-Part of ES6 Spec, `import` and `export` are used to:
-
-<Steps>
-
-- Import code from external libraries
-- Allow us to keep our code organized in separate files with clear dependencies
-- Tell webpack how to bundle together the final code that is sent to the browser
-
-</Steps>
-
-</Layout>
-
-<Notes>
-
-In react, it's recommended that we write each of our components in its own file to help keep our code organized.
-
-In order to work with code written across multiple files, we can use the `import` and `export` syntax that was introduced to JavaScript as part of ES6 to: ⬇️ 
-
-- Import code from external libraries ⬇️ 
-- Allow us to keep our code organized in separate files with clear dependencies (what we mean here is we can clearly see by looking at our imports what other libraries and/or code the code inside of the current file relies upon) and finally ⬇️ 
-- imports and exports are used by webpack to bundle together the final code that is sent to the browser
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## An Example
-
-For example, if our application looks like this:
-
-<SoloEditor>
-
-```txt
-├── src/
-│   ├── app.js
-│   └── index.js
-├── utils/
-│   └── math.js
-```
-
-</SoloEditor>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Default Exports and Imports
-We can create and export an App component in `src/components/App.js`
-
-<div>
-<SoloEditor>
-
-```jsx
-import React from "react"; // default import
-
-function App() {
-  return <h1>Hello!</h1>;
-}
-
-export default App; // default export
-```
-
-</SoloEditor>
-</div>
-
-And import it within our `src/index.js` file like this:
-
-<div>
-<SoloEditor>
-
-```jsx
-import ReactDOM from "react-dom";
-// there is a convention to import external dependencies first (at the top of your file), and internal dependencies last
-import App from "./App"; // default import, using the relative path to our App.js file
-
-ReactDOM.render(<App />, document.querySelector("#root"));
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Named Exports and Imports
-
-In addition to default imports/exports, you can also do named imports/exports. Typically, classes and React components are exported as the default export, and smaller utility/helper functions are exported as named exports.
-
-For example, if we have some utility functions in `utils/math.js`:
-
-<div>
-<SoloEditor>
-
-```jsx
-const add = (num1, num2) => num1 + num2;
-
-const subtract = (num1, num2) => num1 - num2;
-
-export { add, subtract }; // named export
-```
-
-</SoloEditor>
-</div>
-
-
-We can use those named exports in our `src/App.js` file like this:
-
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Named Exports and Imports, cont'd
-
-<div>
-<SoloEditor>
-
-```jsx
-// src/App.js
-import React from "react"; // default import
-import { add, subtract } from "../utils/math"; // named import
-
-function App() {
-  return <h1>1 + 2 is {add(1, 2)}</h1>;
-}
-
-export default App; // default export
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Live Example of Import/Export
-
-<iframe
-  src="https://codesandbox.io/embed/import-export-example-fjjjf?fontsize=14&hidenavigation=1&theme=dark"
-  style={{
-    width:"100%",
-    height: '800px',
-    border: 0,
-    borderRadius: "4px",
-    overflow: "hidden"
-  }}
-  title="import-export-example"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-></iframe>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## ⚙️ Components
-
-At a minimum, a Component in React is any function that returns valid JSX.
-There are some things you'll need to keep in mind:
-- The name of your component function must be capitalized. This will not work:
-
-<div>
-<SoloEditor>
-
-```jsx
-function card() {
-  return (
-    <div id="card1" className="card">
-      <h1>hi</h1>
-      <p>wassup?</p>
-    </div>
-  );
-}
-
-ReactDOM.render(<card />, document.getElementById("root"));
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-If we make this mistake, there won't be an error, we just won't see the component get rendered.
-But, there is a warning in the console that will appear in this case that gives us a hint!
-
-<iframe
-  src="https://codesandbox.io/embed/non-capitalized-component-example-nb402?fontsize=14&hidenavigation=1&module=%2Fsrc%2Findex.js&theme=dark"
-  style={{
-    width:"100%",
-    height: "700px",
-    border: 0,
-    borderRadius: "4px",
-    overflow: "hidden"
-  }}
-  title="import-export-example"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-></iframe>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## ⚙️ Component Gotchas
-
-- A component can only return _one element_. That element can have children, like this:
-
-<div>
-<SoloEditor>
-
-```jsx
-function Card() {
-  return (
-    <div id="card1" className="card">
-      <h1>hi</h1>
-      <p>wassup?</p>
-    </div>
-  );
-}
-```
-
-</SoloEditor>
-</div>
-
-- But it's not ok for the component to return multiple elements, like this:
-
-<div>
-<SoloEditor>
-
-```jsx
-function Card() {
-  return (
-    <h1>hi</h1>
-    <p>wassup?</p>
-  )
-}
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-If we make this mistake, we'll see something like this:
-
-<iframe
-  src="https://codesandbox.io/embed/adjacent-elements-error-example-0t1l9?fontsize=14&hidenavigation=1&theme=dark"
-  style={{
-    width:"100%",
-    height: "700px",
-    border: 0,
-    borderRadius: "4px",
-    overflow: "hidden"
-  }}
-  title="import-export-example"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-></iframe>
-
-
-> Notice the error is giving us a hint at how to solve the problem here as well.
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## 🧩 React Fragments
-
-We use React fragments in the situation where we don't want to add a bunch of wrapping divs every time we render one component from another. For example, let's say we want an `h1` and `h2` tag from our `Card` component, but we don't want them to be wrapped in a div.
-
-<div>
-<SoloEditor>
-
-```jsx
-function Card() {
-  // breaks
-  return (
-    <h1>Welcome to React!</h1>
-    <h2>Let's learn about JSX</h2>
-  )
-}
-
-function Card() {
-  // works
-  return (
-    <React.Fragment>
-      <h1>Welcome to React!</h1>
-      <h2>Let's learn about JSX</h2>
-    </React.Fragment>
-  )
-}
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Newer Syntax for React Fragments
-
-There's also a newer syntax for React fragments that is equivalent to `<React.Fragment>` but much easier to type:
-
-<div>
-<SoloEditor>
-
-```jsx
-function Card() {
-  // this also works (newer syntax for React.Fragment)
-  return (
-    <>
-      <h1>Welcome to React!</h1>
-      <h2>Let's learn about JSX</h2>
-    </>
-  )
-}
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Bug fixed by adding a React Fragment
-
-<iframe
-  src="https://codesandbox.io/embed/adjacent-elements-error-solved-with-fragment-forked-4x7i0?fontsize=14&hidenavigation=1&theme=dark" 
-  style={{
-    width:"100%",
-    height: "800px",
-    border: 0,
-    borderRadius: "4px",
-    overflow: "hidden"
-  }}
-  title="import-export-example"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+<iframe 
+  src="https://hackmd.io/sHdRmhDHT2S8cFyj2ExdMg?view" 
+  width="90%" height="800px"
 ></iframe>
 
 </Layout>
@@ -713,34 +164,154 @@ function Card() {
 
 <Layout>
 
-## 🎩 Props!
+## Handling events in vanilla JS
 
-When you create components, one way to make them dynamic and reusable is by passing in props. For example, if we wanted to create several cards on our page using a Card component, we could do so like this:
+In vanilla JS, our steps for handling events looked like this:
+
+1. Find piece of DOM: `const pizza = document.getElementById("pizza")`
+2. Add event listener to that piece: `pizza.addEventListener`
+3. Give callback to event listener (remove, add, etc.): `pizza.addEventListener("click", () => {console.log("It's Pizza Time!")})`
+
+In React, we don't have to do step 1, we can skip directly to step 2 by adding event handlers directly to our JSX. We still must supply the event handler with a callback.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Handling events in React
+
+For example, if we're trying to implement a click handler on a button, we could
+do so by passing a callback function to the onClick
+attribute of an element:
+
+<div>
+<SoloEditor>
+
+```js
+function Counter() {
+  return <button onClick={() => console.log("clicked!")}>Click Me</button>;
+}
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Note!
+
+Events can only be attached to DOM elements, we can't attach event listeners to
+our components:
 
 <div>
 <SoloEditor>
 
 ```jsx
-function Card(props) {
+function Counter() {
   return (
-    <div id="card1" className="card">
-      <h1>{props.greeting}</h1>
-      <p>{props.subGreeting}</p>
+    <div>
+      <button onClick={() => console.log("clicked!")}>Click Me</button>
+      <MyCustomButton onClick={() => console.log("will never fire")}>
+        Click Me
+      </MyCustomButton>
     </div>
   );
 }
-
-ReactDOM.render(
-  <div>
-    <Card greeting="hi" subGreeting="hello" />
-    <Card greeting="sup" subGreeting="what's up" />
-  </div>,
-  document.getElementById("root")
-);
 ```
 
 </SoloEditor>
 </div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## A more common approach
+
+We can also create a helper function for the callback:
+
+<div>
+<SoloEditor>
+
+```jsx
+function Counter() {
+  function handleClick(event) {
+    console.log(event);
+  }
+
+  return <button onClick={handleClick}>Click Me</button>;
+}
+```
+
+</SoloEditor>
+</div>
+
+This is helpful in the case where we need to introduce additional 
+event handling logic. We can do so without cluttering our JSX.
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## 🎟 Synthetic Events 🎟
+
+Rather than working with the native `event` object in the browser, React passes
+a <a href="https://reactjs.org/docs/events.html" target="_blank">Synthetic Event</a> object to our event
+handlers. Synthetic events ensure that you can use the `event` object in the
+same way regardless of browser or machine. This comes back to the
+`learn once, write anywhere` principle.
+
+Otherwise, events are more or less the same as they are in vanilla JS. With one notable exception being `onChange` which in React behaves identically to the `onInput` event.
+
 
 </Layout>
 
@@ -758,35 +329,233 @@ ReactDOM.render(
 
 <Layout>
 
-## 🎩 Props!
+## State
 
-The _props_ argument in our Card component defines an **object** that React will pass to our function when it is called, and it will use whatever attributes we add to our JSX component as key-value pairs on that props object.
+State is used for data that needs to be dynamic. Where props are passed down
+from parents to children and are static, values stored in state are meant to
+change, especially as the user interacts with the DOM.
 
-For example, if we were to add a `console.log` in the Card component above, we'd end up seeing this object:
+This is a key component of declarative programming in React: we tie our
+components to our state by integrating values in state into logic (e.g.
+conditional rendering). This way, changes in state eventually cause changes to
+the DOM.
+
+To work with state in a function component, we use the `useState` hook
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## The useState() hook
 
 <div>
 <SoloEditor>
 
-```jsx
-function Card(props) {
-  console.log(props); // => { greeting: "hi", subGreeting: "hello" }
+```js
+import React, { useState } from "react";
 
-  return (
-    <div id="card1" className="card">
-      <h1>{props.greeting}</h1>
-      <p>{props.subGreeting}</p>
-    </div>
-  );
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return <button>Count: {count}</button>;
 }
-
-ReactDOM.render(
-  <Card greeting="hi" subGreeting="hello" />,
-  document.getElementById("root")
-);
 ```
 
 </SoloEditor>
 </div>
+
+When we call `useState(0)` inside the function component, that creates a new
+"state variable" which our function gets access to. That new state variable has
+an **initial value** of 0 (or whatever we pass into `useState` when we call it).
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+`useState` will return an **array** of two elements:
+
+- `count`: the current value for the state variable
+- `setCount`: a _setter_ function to update the state variable
+
+We could access those elements from the array individually, like this:
+
+<div>
+<SoloEditor>
+
+```js
+const countState = useState(0);
+// => [0, setStateFunction]
+const count = countState[0];
+const setCount = countState[1];
+```
+
+</SoloEditor>
+</div>
+
+But to clean up the code, React recommends using
+[array destructuring] to achieve the same result in one line of
+code instead of three:
+
+<div>
+<SoloEditor>
+
+```js
+const [count, setCount] = useState(0);
+```
+
+</SoloEditor>
+</div>
+
+We can then use the `count` variable to access that piece of state and display
+its current value in the `<button>` element.
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### Setting State
+
+To update a state variable, we use its setter function:
+
+<div>
+<SoloEditor>
+
+```js
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    setCount(count + 1);
+  }
+
+  return <button onClick={handleClick}>Count: {count}</button>;
+}
+```
+
+</SoloEditor>
+</div>
+
+Calling the setter function does two things:
+
+- It updates the state variable to some new value
+- It causes our component to **re-render** and update the DOM
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## 🤔 Decisions
+
+Two important decisions we'll need to start making when working in React are:
+
+- What should be state? (vs props)
+- Where should state be?
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### 🤔 Decisions - Should it be state?
+
+From Step 3 of
+[Thinking in React](https://reactjs.org/docs/thinking-in-react.html): to decide
+what we need as `state`, ask three questions about each piece of data:
+
+- Is it passed in from a parent via props? If so, it probably isn’t state.
+- Does it remain unchanged over time? If so, it probably isn’t state.
+- Can you compute it based on any other state or props in your component? If so,
+  it isn’t state.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### 🤔 Decisions - Where should state be?
+
+From Step 4 of Thinking in React: To decide where state should live, for each
+piece of state in your application:
+
+- Identify every component that renders something based on that state.
+- Find a common owner component (a single component above all the components
+  that need the state in the hierarchy).
+- Either the common owner or another component higher up in the hierarchy should
+  own the state.
+- If you can’t find a component where it makes sense to own the state, create a
+  new component solely for holding the state and add it somewhere in the
+  hierarchy above the common owner component.
 
 </Layout>
 
@@ -804,30 +573,13 @@ ReactDOM.render(
 
 <Layout>
 
-## Dealing with Non-String prop values
+## Todo List for Today
 
-One additional note on JSX syntax and props: if you need to define attributes on a component that aren't strings, you have to wrap those values in `{}`. You can pass down any kind of data that you want to via props, even arrays, objects, and callback functions:
+- Toggle Dark Mode Button Text on click
+- Exercise Add a 'like' button to each project card
+- Filter by project name
 
-<div>
-<SoloEditor>
-
-```jsx
-ReactDOM.render(
-  <div>
-    <Card
-      greeting="hi"
-      number={7}
-      boolean={false}
-      callback={() => console.log("call me!")}
-      object={{ key: "value" }}
-    />
-  </div>,
-  document.getElementById("root")
-);
-```
-
-</SoloEditor>
-</div>
+We'll go through toggling the Dark Mode button text now and then we'll take a break!
 
 </Layout>
 
@@ -859,115 +611,133 @@ ReactDOM.render(
 
 <!-- End Slide -->
 
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Project Showcase Application
-
-<img 
-  src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1643721399/wireframe_bfc35e.png" 
-  style={{height: '800px'}}
-/>
-
-What components can we break this UI into?
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Todo List for Today
-
-- use create-react-app to create a new application
-- Build out components within the component hierarchy we diagrammed
-- Use exports and imports to compose those components into the proper structure
-- Export/Import data from a file called data.js and pass it as props to the appropriate component
-
-Feel free to use [this google doc](https://docs.google.com/document/d/1iAtutIgh8L-WSi6TaURiAmq_S5yglduQCNx3x9qI29o/edit) to keep track of important commands that we're running and to take notes as a group while we go through this coding session.
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-# Component Hierarchy
-
-<img 
-  src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1643721493/component-hierarchy_zytnvg.png" 
-  style={{height: '400px'}}
-/>
-
-<Steps>
-
-
-- Where does our project data fit into this diagram?
-- What does that mean for our props?
-
-</Steps>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Installing and Using the React Developer Tools
-
-<iframe width="800" height="450" src="https://www.youtube.com/embed/fXRB6wgeKOo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
 ---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Setting State is Asynchronous
+
+Updates to state are asynchronous - this means that code written immediately
+after updating state will not see changes in your state.
+
+<div>
+<SoloEditor>
+
+```js
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    console.log(count); // => 0
+    setCount(count + 1); // => 0 + 1 = 1
+    console.log(count); // => 0
+    setCount(count + 1); // => 0 + 1 = 1
+    console.log(count); // => 0
+  }
+
+  return <button onClick={handleClick}>Count: {count}</button>;
+}
+```
+
+</SoloEditor>
+</div>
+
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## 🕷 Fixing the Bug 🕷
+
+
+`setState` can take a value OR a function as its first argument. Since
+[updates to state and props may be asynchronous](https://reactjs.org/docs/hooks-reference.html#functional-updates),
+you should use the function version of `setState` when you intend to use the
+previous state or props values when writing the new state values.
+
+<div>
+<SoloEditor>
+
+```js
+import React, { useState } from "react";
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  function handleClick() {
+    // callback version of setState
+    setCount((count) => count + 1); // 0 + 1 = 1
+    setCount((count) => count + 1); // 1 + 1 = 2
+  }
+
+  return <button onClick={handleClick}>Count: {count}</button>;
+}
+```
+
+</SoloEditor>
+</div>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+
+<!-- Begin Slide -->
+
+
+## 🏋️‍♂️ Exercise 🏋️‍♂️
+
+Add a 'like' button to each project card (10-12 minutes)
+
+[Open Codesandbox](https://codesandbox.io/s/nice-mirzakhani-cnzm0?from-embed=&file=/src/components/ProjectItem.js) - instructions in `src/components/ProjectItem.js`
+
+<iframe
+  src="https://codesandbox.io/embed/nice-mirzakhani-cnzm0?file=/src/components/ProjectItem.js&fontsize=14&hidenavigation=1&theme=dark"
+  width="100%" height="600px"
+></iframe>
+
+
+
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
 
 # Recap of Key Skills
 
-- Use create-react-app to generate a new react application
-- Use import to retrieve data from another file
-- Use props to pass data from one component to another
-- Use Components as a way of separating UI concerns splitting UI into smaller reusable pieces
-- Export components from their respective files and import them into other components so they're available within JSX.
+- introduce state to our application so that 
+  - user behavior -> update state -> React updates DOM
+- deciding what things should be state and what should be props
 
 ---
 
@@ -991,14 +761,13 @@ Feel free to use [this google doc](https://docs.google.com/document/d/1iAtutIgh8
 
 # 👷‍♀️ Resources
 
-- [React](https://reactjs.org/)
-- [Babel](https://babeljs.io/)
-- [React with Hooks Docs](https://reactwithhooks.netlify.app/)
-- [Creating React Apps](https://reactjs.org/docs/create-a-new-react-app.html)
-- [Create React App](http://create-react-app.dev/)
-- [Webpack](https://webpack.js.org/)
-- [Quick Intro to Webpack](https://medium.com/the-self-taught-programmer/what-is-webpack-and-why-should-i-care-part-1-introduction-ca4da7d0d8dc)
+- [React Docs - Events](https://reactjs.org/docs/events.html)
+- [React Docs - Hooks](https://reactjs.org/docs/hooks-overview.html)
+- [React Docs - Functional State Updates](https://reactjs.org/docs/hooks-reference.html#functional-updates)
+- [React Docs - Stale State Problem](https://reactjs.org/docs/hooks-faq.html#why-am-i-seeing-stale-props-or-state-inside-my-function)
+- [How to use Emojis in React](https://medium.com/@seanmcp/%EF%B8%8F-how-to-use-emojis-in-react-d23bbf608bf7)
 
 </Layout>
 
 <!-- End Slide -->
+
