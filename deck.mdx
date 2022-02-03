@@ -15,7 +15,7 @@ export const theme = baseTheme;
 
 
 <Head>
-  <title>Slides | State and Events</title>
+  <title>Slides | React Information Flow</title>
   <link
     rel="shortcut icon"
     type="image/x-icon"
@@ -29,7 +29,7 @@ export const theme = baseTheme;
 
 <Layout>
 
-## State and Events
+## React Information Flow
 
 <Logo />
 
@@ -37,7 +37,7 @@ export const theme = baseTheme;
 
 <Notes>
 
-Today, we'll be discussing props and components and we'll get started building out a project that we'll be extending throughout the rest of the phase.
+
 
 </Notes>
 
@@ -45,7 +45,7 @@ Today, we'll be discussing props and components and we'll get started building o
 
 ---
 
-# Questions?
+# [Questions?](https://docs.google.com/document/d/1iAtutIgh8L-WSi6TaURiAmq_S5yglduQCNx3x9qI29o/edit#)
 
 <iframe width="1000" height="800" src="https://docs.google.com/document/d/1iAtutIgh8L-WSi6TaURiAmq_S5yglduQCNx3x9qI29o/edit#"></iframe>
 
@@ -65,11 +65,9 @@ If you have any questions throughout lecture and you want to make sure they don'
 
 <Steps>
 
-- Add event handlers to elements in React
-- Use the useState hook to create state variables
-- Create event handler callbacks that manipulate state
-- Trigger re-renders by setting state
-- Distinguish between props and state
+- Revisit our component hierarchy and describe the Flow of Information
+- Decide which components should have state
+- Pass data _up_ with callbacks, and _down_ with props 
 
 </Steps>
 
@@ -77,13 +75,7 @@ If you have any questions throughout lecture and you want to make sure they don'
 
 <Notes>
 
-Our goal today will be to talk about ⬇️ 
 
-- How to add event listeners to elements in React ⬇️ 
-- How to use the useState hook to create state variables ⬇️ 
-- How to manipulate state within event handler ⬇️ 
-- Trigger re-renders by setting state ⬇️ 
-- How to distinguish between props and state 
 
 </Notes>
 
@@ -99,15 +91,11 @@ Our goal today will be to talk about ⬇️
 
 <Steps>
 
-- Review app code and changes from yesterday 
-- Review React Docs on Events
-- Handle events and introduce state by creating a click counter
-- Use the useState hook to create a state variable
-- The "gotchas":
-  - Show that setState is asynchronous
-  - Using setState with value vs function
-  - Stale closures
-  - Examples
+- Take a look at the component Hierarchy and decide where data will flow from component to component
+- Integrate JSON-Server into our application
+- Add a button to allow fetching data from server
+- Use Inverse Data flow to implement Light-Dark mode
+- Exercise: Implement Inverse Data flow to fix a broken search feature
 
 </Steps>
 
@@ -123,382 +111,8 @@ Our goal today will be to talk about ⬇️
 
 ## Deliverables
 
-- Toggle Dark Mode Button Text on click
-- Exercise Add a 'like' button to each project card
-- Filter by project name
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-<iframe 
-  src="https://hackmd.io/sHdRmhDHT2S8cFyj2ExdMg?view" 
-  width="90%" height="800px"
-></iframe>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Handling events in vanilla JS
-
-In vanilla JS, our steps for handling events looked like this:
-
-1. Find piece of DOM: `const pizza = document.getElementById("pizza")`
-2. Add event listener to that piece: `pizza.addEventListener`
-3. Give callback to event listener (remove, add, etc.): `pizza.addEventListener("click", () => {console.log("It's Pizza Time!")})`
-
-In React, we don't have to do step 1, we can skip directly to step 2 by adding event handlers directly to our JSX. We still must supply the event handler with a callback.
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Handling events in React
-
-For example, if we're trying to implement a click handler on a button, we could
-do so by passing a callback function to the onClick
-attribute of an element:
-
-<div>
-<SoloEditor>
-
-```js
-function Counter() {
-  return <button onClick={() => console.log("clicked!")}>Click Me</button>;
-}
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Note!
-
-Events can only be attached to DOM elements, we can't attach event listeners to
-our components:
-
-<div>
-<SoloEditor>
-
-```jsx
-function Counter() {
-  return (
-    <div>
-      <button onClick={() => console.log("clicked!")}>Click Me</button>
-      <MyCustomButton onClick={() => console.log("will never fire")}>
-        Click Me
-      </MyCustomButton>
-    </div>
-  );
-}
-```
-
-</SoloEditor>
-</div>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## A more common approach
-
-We can also create a helper function for the callback:
-
-<div>
-<SoloEditor>
-
-```jsx
-function Counter() {
-  function handleClick(event) {
-    console.log(event);
-  }
-
-  return <button onClick={handleClick}>Click Me</button>;
-}
-```
-
-</SoloEditor>
-</div>
-
-This is helpful in the case where we need to introduce additional 
-event handling logic. We can do so without cluttering our JSX.
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## 🎟 Synthetic Events 🎟
-
-Rather than working with the native `event` object in the browser, React passes
-a <a href="https://reactjs.org/docs/events.html" target="_blank">Synthetic Event</a> object to our event
-handlers. Synthetic events ensure that you can use the `event` object in the
-same way regardless of browser or machine. This comes back to the
-`learn once, write anywhere` principle.
-
-Otherwise, events are more or less the same as they are in vanilla JS. With one notable exception being `onChange` which in React behaves identically to the `onInput` event.
-
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## State
-
-State is used for data that needs to be dynamic. Where props are passed down
-from parents to children and are static, values stored in state are meant to
-change, especially as the user interacts with the DOM.
-
-This is a key component of declarative programming in React: we tie our
-components to our state by integrating values in state into logic (e.g.
-conditional rendering). This way, changes in state eventually cause changes to
-the DOM.
-
-To work with state in a function component, we use the `useState` hook
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## The useState() hook
-
-<div>
-<SoloEditor>
-
-```js
-import React, { useState } from "react";
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  return <button>Count: {count}</button>;
-}
-```
-
-</SoloEditor>
-</div>
-
-When we call `useState(0)` inside the function component, that creates a new
-"state variable" which our function gets access to. That new state variable has
-an **initial value** of 0 (or whatever we pass into `useState` when we call it).
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-`useState` will return an **array** of two elements:
-
-- `count`: the current value for the state variable
-- `setCount`: a _setter_ function to update the state variable
-
-We could access those elements from the array individually, like this:
-
-<div>
-<SoloEditor>
-
-```js
-const countState = useState(0);
-// => [0, setStateFunction]
-const count = countState[0];
-const setCount = countState[1];
-```
-
-</SoloEditor>
-</div>
-
-But to clean up the code, React recommends using
-[array destructuring] to achieve the same result in one line of
-code instead of three:
-
-<div>
-<SoloEditor>
-
-```js
-const [count, setCount] = useState(0);
-```
-
-</SoloEditor>
-</div>
-
-We can then use the `count` variable to access that piece of state and display
-its current value in the `<button>` element.
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-### Setting State
-
-To update a state variable, we use its setter function:
-
-<div>
-<SoloEditor>
-
-```js
-import React, { useState } from "react";
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  function handleClick() {
-    setCount(count + 1);
-  }
-
-  return <button onClick={handleClick}>Count: {count}</button>;
-}
-```
-
-</SoloEditor>
-</div>
-
-Calling the setter function does two things:
-
-- It updates the state variable to some new value
-- It causes our component to **re-render** and update the DOM
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## 🤔 Decisions
-
-Two important decisions we'll need to start making when working in React are:
-
-- What should be state? (vs props)
-- Where should state be?
+- Add a button to our App that will use json-server to fetch projects and store them in state
+- Implement the light mode/dark mode functionality
 
 </Layout>
 
@@ -573,13 +187,37 @@ piece of state in your application:
 
 <Layout>
 
-## Todo List for Today
+## Data Flow
 
-- Toggle Dark Mode Button Text on click
-- Exercise Add a 'like' button to each project card
-- Filter by project name
+![Component Hierarchy with Data Flow](https://res.cloudinary.com/dnocv6uwb/image/upload/v1643912910/component-hierarchy-with-data-flow_cq3qkl.png)
 
-We'll go through toggling the Dark Mode button text now and then we'll take a break!
+where else do we need access to projects?
+<br/>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Introducing JSON-server
+
+<Steps>
+
+- add "server" script to our package.json that will run the json-server --watch command on port 4000
+- rework App component to integrate fetched data
+
+</Steps>
 
 </Layout>
 
@@ -611,41 +249,41 @@ We'll go through toggling the Dark Mode button text now and then we'll take a br
 
 <!-- End Slide -->
 
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Integrating Light/Dark mode
+
+<Steps>
+
+- Currently, we have our isDarkMode state within the `Header` component. 
+- What's the problem with that? How are we actually implementing Dark and Light styles?
+- Let's go fix it!
+
+
+</Steps>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
 ---
 
 <!-- Begin Slide -->
 
 <Layout>
 
-## Setting State is Asynchronous
-
-Updates to state are asynchronous - this means that code written immediately
-after updating state will not see changes in your state.
-
-<div>
-<SoloEditor>
-
-```js
-import React, { useState } from "react";
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  function handleClick() {
-    console.log(count); // => 0
-    setCount(count + 1); // => 0 + 1 = 1
-    console.log(count); // => 0
-    setCount(count + 1); // => 0 + 1 = 1
-    console.log(count); // => 0
-  }
-
-  return <button onClick={handleClick}>Count: {count}</button>;
-}
-```
-
-</SoloEditor>
-</div>
-
+## Diagram!
+![React Inverse Data Flow Diagram](https://res.cloudinary.com/dnocv6uwb/image/upload/v1643914430/react-inverse-data-flow-diagram_dzkos1.png)
 
 </Layout>
 
@@ -663,35 +301,9 @@ function Counter() {
 
 <Layout>
 
-## 🕷 Fixing the Bug 🕷
-
-
-`setState` can take a value OR a function as its first argument. Since
-[updates to state and props may be asynchronous](https://reactjs.org/docs/hooks-reference.html#functional-updates),
-you should use the function version of `setState` when you intend to use the
-previous state or props values when writing the new state values.
-
-<div>
-<SoloEditor>
-
-```js
-import React, { useState } from "react";
-
-function Counter() {
-  const [count, setCount] = useState(0);
-
-  function handleClick() {
-    // callback version of setState
-    setCount((count) => count + 1); // 0 + 1 = 1
-    setCount((count) => count + 1); // 1 + 1 = 2
-  }
-
-  return <button onClick={handleClick}>Count: {count}</button>;
-}
-```
-
-</SoloEditor>
-</div>
+# ☕️☕️☕️☕️☕️☕️☕️☕️ 
+# Break!
+# 🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️
 
 </Layout>
 
@@ -711,13 +323,15 @@ function Counter() {
 
 ## 🏋️‍♂️ Exercise 🏋️‍♂️
 
-Add a 'like' button to each project card (10-12 minutes)
+Implement Inverse Data flow to fix a broken search feature
 
-[Open Codesandbox](https://codesandbox.io/s/nice-mirzakhani-cnzm0?from-embed=&file=/src/components/ProjectItem.js) - instructions in `src/components/ProjectItem.js`
+[Open Codesandbox](https://codesandbox.io/s/inverse-data-flow-exercise-otvjp?file=/src/App.js) - instructions in `src/App.js`
 
-<iframe
-  src="https://codesandbox.io/embed/nice-mirzakhani-cnzm0?file=/src/components/ProjectItem.js&fontsize=14&hidenavigation=1&theme=dark"
-  width="100%" height="600px"
+<iframe src="https://codesandbox.io/embed/inverse-data-flow-exercise-otvjp?fontsize=14&hidenavigation=1&theme=dark"
+  style={{"width":"100%", height:"500px"}}
+  title="Inverse Data Flow exercise"
+  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
 ></iframe>
 
 
@@ -738,36 +352,4 @@ Add a 'like' button to each project card (10-12 minutes)
 - introduce state to our application so that 
   - user behavior -> update state -> React updates DOM
 - deciding what things should be state and what should be props
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-# 🤔 Questions?
-
-<iframe width="1000" height="800" src="https://docs.google.com/document/d/1iAtutIgh8L-WSi6TaURiAmq_S5yglduQCNx3x9qI29o/edit#"></iframe>
-
-</Layout>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-# 👷‍♀️ Resources
-
-- [React Docs - Events](https://reactjs.org/docs/events.html)
-- [React Docs - Hooks](https://reactjs.org/docs/hooks-overview.html)
-- [React Docs - Functional State Updates](https://reactjs.org/docs/hooks-reference.html#functional-updates)
-- [React Docs - Stale State Problem](https://reactjs.org/docs/hooks-faq.html#why-am-i-seeing-stale-props-or-state-inside-my-function)
-- [How to use Emojis in React](https://medium.com/@seanmcp/%EF%B8%8F-how-to-use-emojis-in-react-d23bbf608bf7)
-
-</Layout>
-
-<!-- End Slide -->
 
