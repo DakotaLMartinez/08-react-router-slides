@@ -6,6 +6,7 @@ import LiveEditor from "./components/live-editor";
 import SoloEditor from "./components/solo-editor";
 import { Logo } from "./components/shared";
 import reactUsage from "./assets/react-usage.png";
+import ExternalLink from "./components/ExternalLink.js"
 // import CodeSandbox from "./components/CodeSandbox";
 
 
@@ -15,7 +16,7 @@ export const theme = baseTheme;
 
 
 <Head>
-  <title>Slides | React Forms</title>
+  <title>Slides | React Router</title>
   <link
     rel="shortcut icon"
     type="image/x-icon"
@@ -29,7 +30,7 @@ export const theme = baseTheme;
 
 <Layout>
 
-## React Forms
+## React Router
 
 <Logo />
 
@@ -53,9 +54,13 @@ export const theme = baseTheme;
 
 <Steps>
 
-- Explain why we use controlled forms (vs uncontrolled forms)
-- Implement a controlled form
-- Use form data to update state
+- Create a multi-page SPA
+- Explain the advantages of using React Router
+- Utilize the most common `react-router` components to build a SPA:
+      `BrowserRouter`, `Route`, `Switch`, `Link`, and `NavLink`
+- Use custom hooks like `useHistory` and `useParams` to access the state of the router
+- Use the `history` object to navigate pages
+- Create dynamic routes and use `params`
 
 </Steps>
 
@@ -79,11 +84,14 @@ export const theme = baseTheme;
 
 <Steps>
 
-- Create a form and make it controlled
-  - Input change handlers
-  - Form submit handler
-- Handle submitting the form and update state in parent using inverse data flow
-  - **Check for understanding**: [exercise](https://codesandbox.io/s/form-exercise-vpzpd?file=/src/App.js)
+- Discuss SPA architecture: Pros &amp; Cons of Client-Side Routing
+- Add client side routing
+  - BrowserRouter
+  - Route
+  - Switch
+  - Link/NavLink
+  - Dynamic Routes/params
+  - History
 
 </Steps>
 
@@ -99,7 +107,9 @@ export const theme = baseTheme;
 
 ## Deliverables
 
-- Connect `ProjectForm` so that we can use it to create new projects for our application
+- Add Routes to our application so we can conditionally render components based on URL
+- Add Links to our application so users can navigate between different parts of our UI
+- All parts of our UI should still have access to the same data that they had before
 
 </Layout>
 
@@ -117,14 +127,15 @@ export const theme = baseTheme;
 
 <Layout>
 
-## Refresher on Forms
+### Static vs Dynamic Routing
 
-In vanilla JS, our typical process for working with forms and getting access to
-the form data in our application looked something like this:
+**Why do we even need routes?** Check out <ExternalLink href="https://www.lingscars.com/">Lings Cars</ExternalLink> and <ExternalLink href="https://unsplash.com">Unsplash</ExternalLink>
 
-- Get the form element and listen for a submit event
-- Find the form inputs using their name attribute and grab the values
-- Do something with the form data (send a `fetch` request; update the DOM)
+Let's try comparing the two as we naviate from page to page with the network tab set to <ExternalLink href="https://www.browserstack.com/guide/how-to-perform-network-throttling-in-chrome">throttle at slow 3g speed</ExternalLink>
+
+Enter Event number: 12326, click the enter button below to add your observations
+
+<iframe width="1000" height="700" src="https://onlinequestions.org/"></iframe>
 
 </Layout>
 
@@ -142,139 +153,300 @@ the form data in our application looked something like this:
 
 <Layout>
 
-### HTML + Vanilla JS Form submission
+## Getting Started With React Router
+
+Before we do anything, we need to make a plan about what we want.
+
+What URLs do we want our application to have to simulate the feeling of different "pages"?
+
+<iframe 
+  src="https://docs.google.com/spreadsheets/d/1ZB-y3EAQi2caFTdrqWZEnKO2ljMckY1GJrX4YLNpZ8c/edit#gid=0"
+  width="700" height="700"
+></iframe>
+
+-----
+<ExternalLink href="https://docs.google.com/spreadsheets/d/1ZB-y3EAQi2caFTdrqWZEnKO2ljMckY1GJrX4YLNpZ8c/edit#gid=0">Sheet</ExternalLink>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### ⚙️ The Primary React Router Components
+
+<iframe 
+  src="https://docs.google.com/spreadsheets/d/1Jzhi9Bbt4bSuecOqxiFtM3jCZzqZ1xjwJUZMbvamra0"
+  width="910" height="680"
+></iframe>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Component Hierarchy with Routes
+
+![Component Hierarchy with React Router](https://res.cloudinary.com/dnocv6uwb/image/upload/v1644540849/component-hierarchy-with-react-router-and-data-flow_xjic5u.png)
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### HTML5 History API
+
+At a low level, React Router takes advantage of the fact that we can interact with the browser's url programmatically by using the <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/API/History_API/Working_with_the_History_API">History API</ExternalLink>
+
+You can manipulate the URL in your browser with these:
 
 <div>
 <SoloEditor>
 
-```jsx
-const form = document.querySelector("form");
-
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
-  // access form data from the DOM
-  const nameInput = event.target.name;
-  const passwordInput = event.target.password;
-
-  const formData = {
-    name: nameInput.value,
-    password: passwordInput.value,
-  };
-  // do something with the form data
-});
+```js
+window.history.back(); // go back
+window.history.forward(); // go forward
+window.history.pushState({}, "", "pets"); // go to the /pets page
 ```
 
 </SoloEditor>
 </div>
 
+We can also interact with the URL using the Location API:
 
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-### React Controlled Forms
-
-In React, rather than looking into the DOM to get the form's input field values
-when the form is submitted, we use **state** to monitor the user's input **as
-they type**, so that our component state is always _in sync_ with the DOM.
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-To keep track of each input's value, you need:
-
-1. Some state to manage the input's value
-2. An `onChange` listener on the input to monitor user input and update state
-3. A `value` attribute on the input that corresponds to a key in state
-
-And for the form itself, you need an `onSubmit` listener on the form to finally
-submit data.
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Using Forms
-
-### Process: Making a Controlled Form
-
-1. For each input element in the form, create a new state variable
-2. Create an `onChange` handler for each input field to _update_ the corresponding state variable
-3. Connect the `value` attribute of each input field to the corresponding state variable
-
-Finally, On the `<form>` element, create an `onSubmit` listener and attach a `handleSubmit` handler to run code when the form is submitted (both controlled and uncontrolled forms will have the `onSubmit` listener)
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-##### 🛠 Process: Making a Controlled Form (state for inputs)
-
-<small>For example, if we have a form component that looks like this:</small>
-<hr/>
 <div>
 <SoloEditor>
 
 ```js
-function CommentForm() {
-  const [username, setUsername] = useState("");
-  const [comment, setComment] = useState("");
+console.log(window.location.pathname);
+// => "/pets"
+```
 
+</SoloEditor>
+</div>
+
+Combine that with `if/else` logic and tracking history and you get `react-router`.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Using React Router
+
+<div>
+<SoloEditor>
+
+```sh
+npm install react-router-dom@5.3.0
+```
+
+</SoloEditor>
+</div>
+
+There was a major update to React Router that was released in the last few months that includes breaking changes to v5 code. The version of React Router that you've learned about in the curriculum is version 5, so you'll need to specify the version when you install from npm. 
+
+<ExternalLink href="https://enlear.academy/whats-new-in-react-router-6-e34e451e5285">Learn more about what's new in V6</ExternalLink>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### Creating a Router
+
+To set up our application to use a router, we wrap our ENTIRE application in a
+`Router` component:
+
+<div>
+<SoloEditor>
+
+```js
+import React from "react";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
+import App from "./App";
+
+ReactDOM.render(
+  <Router>
+    <App />
+  </Router>,
+  document.getElementById("root")
+);
+```
+
+</SoloEditor>
+</div>
+
+React Router is essentially a
+[Context Provider](https://reactjs.org/docs/context.html) that gives your other
+components access to the history object so you have access to additional
+information to perform routing logic.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### Other Router Options
+
+Note that React Router has two main kinds of routers to choose from:
+
+- **BrowserRouter**: gives nicest looking URLs, but can be trickier to deploy
+  (check your host's documentation on client side routing to see how to
+  configure it if you need this style of URL).
+- **HashRouter**: all urls start with a # at the beginning. Easier to configure
+  for deploying, but has some limitations.
+
+IMO, it's worth the extra effort to get BrowserRouter working!
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### Creating Routes
+
+Once your Router component is set up, you can create separate routes that will
+each be responsible for showing separate components. If we want to use the
+following routes in our application:
+
+- "/" - `HomePage` component
+- "/about" - `AboutPage` component
+
+When we code this, we'll rely on two components from React Router to set up
+these different routes:
+
+- `Switch`: Looks through all its child Route components and returns the first
+  one that matches the current URL (like a `switch` statement in JavaScript)
+- `Route`: Uses a prop of _path_ to compare with the current URL; if the path
+  matches the url, it will render a component based on its _component_ or
+  _render_ prop
+  - Use `exact` prop if you only want exact matches!
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Switch &amp; Routes
+
+<div>
+<SoloEditor>
+
+```js
+// App.js
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import HomePage from "./HomePage";
+import AboutPage from "./AboutPage";
+import UserPage from "./UserPage";
+import NavBar from "./NavBar";
+
+function App() {
   return (
-    <form>
-      <input type="text" name="username" />
-      <textarea name="comment" />
-      <button type="submit">Submit</button>
-    </form>
+    <div className="App">
+      <NavBar /> {/* NavBar will be displayed on all routes */}
+      <Switch>
+        <Route path="/about">
+          <AboutPage />
+        </Route>
+        <Route path="/users/:name">
+          <UserPage />
+        </Route>
+        <Route exact path="/">
+          <HomePage />
+        </Route>
+      </Switch>
+    </div>
   );
 }
 ```
@@ -282,55 +454,7 @@ function CommentForm() {
 </SoloEditor>
 </div>
 
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-##### 🛠 Process: Making a Controlled Form (onChange listeners)
-
-<small>We could make it a _controlled form_ by attaching onChange listeners to each input:
-</small>
-<hr/>
-<div>
-<SoloEditor>
-
-```js
-function CommentForm() {
-  const [username, setUsername] = useState("");
-  const [comment, setComment] = useState("");
-
-  function handleUsernameChange(event) {
-    setUsername(event.target.value);
-  }
-
-  function handleCommentChange(event) {
-    setComment(event.target.value);
-  }
-
-  return (
-    <form>
-      <input type="text" name="username" onChange={handleUsernameChange} />
-      <textarea name="comment" onChange={handleCommentChange} />
-      <button type="submit">Submit</button>
-    </form>
-  );
-}
-```
-
-</SoloEditor>
-</div>
+Any questions about how this code is working?
 
 </Layout>
 
@@ -348,90 +472,15 @@ function CommentForm() {
 
 <Layout>
 
-##### 🛠 Process: Making a Controlled Form (input values)
-
-
-Doing this creates a 1-way connection wherein user input changes `state`. This
-is called an _uncontrolled form_.
-
-To make it a 2-way street wherein `state` can change the user's input, we add a
-`value` attribute to our inputs.
-
-<div>
-<SoloEditor>
-
-```jsx
-<form>
-  <input
-    type="text"
-    name="username"
-    onChange={handleUsernameChange}
-    value={username}
-  />
-  <textarea name="comment" onChange={handleCommentChange} value={comment} />
-</form>
-```
-
-</SoloEditor>
-</div>
-
-This is what creates a _controlled_ form component
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-## Controlled Form Review
-
-Each input element in the form, has:
-
-1. a corresponding state variable
-2. an `onChange` handler to _update_ that state variable
-3. a `value` attribute set to that state variable
-
-In this way, React has total control of what appears in the controlled form's inputs because each input mirrors a piece of state.
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
---- 
-
-<!-- Begin Slide -->
-
-<Layout>
-
-### ✅ Let's go make our `ProjectForm` component a controlled form!
+## Tasks before Break
 
 <Steps>
 
-1. Add state for inputs
-2. give inputs onChange to update state
-3. give inputs value so they display what's in state
-4. Add submit event handler that will send a post request to create a new project
+- Add Switch and Routes to App.js
+- Examine how regular anchor tags work and refactor to `Link` and `NavLink`
 
 </Steps>
 
-
-
 </Layout>
 
 <Notes>
@@ -468,37 +517,14 @@ In this way, React has total control of what appears in the controlled form's in
 
 <Layout>
 
-## Data Flow
+## Custom Hooks
 
-![Component Hierarchy](https://res.cloudinary.com/dnocv6uwb/image/upload/v1643721715/component-hierarchy_zytnvg.png)
+<iframe 
+  src="https://docs.google.com/spreadsheets/d/1Jzhi9Bbt4bSuecOqxiFtM3jCZzqZ1xjwJUZMbvamra0/edit#gid=1219624523"
+  width="910" height="680"
+></iframe>
 
-Do we have an inverse data flow situation here?
-<br/>
-<br/>
-
-</Layout>
-
-<Notes>
-
-
-
-</Notes>
-
-<!-- End Slide -->
-
----
-
-<!-- Begin Slide -->
-
-<Layout>
-
-### 🔍 Identifying the Need for Inverse Data Flow
-
-![React Inverse Data Flow](https://res.cloudinary.com/dnocv6uwb/image/upload/v1643998564/react-inverse-data-flow-diagram_cqpyyh.png)
-
-What do we need to do with the `ProjectForm`?
-<br/>
-<br/>
+The two you'll most likely be using in your projects are `useHistory()` and `useParams()`. We'll go through an example of how to apply both!
 
 </Layout>
 
@@ -516,9 +542,99 @@ What do we need to do with the `ProjectForm`?
 
 <Layout>
 
-# ☕️☕️☕️☕️☕️☕️☕️☕️ 
-# Break!
-# 🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️🙆‍♂️
+### useParams()
+
+Say I'm in this situation:
+- I'm in my browser at the following URL: `http://localhost:3000/projects/2`. 
+- I have a Route in my application with a path of `projects/:id`
+
+I can utilize the `useParams()` hook to retrieve that id of 2!
+
+<div>
+<SoloEditor>
+
+```jsx
+import { useParams } from 'react-router-dom';
+// ...
+function myComponent() {
+  const { id } = useParams();
+  console.log(id); // logs 2 when rendered!
+}
+```
+
+</SoloEditor>
+</div>
+
+This is especially useful if I need to fetch information from the database related to a specific project. In our current application, we have a useEffect set up in our `ProjectDetail` component that relies on an id that is currently hard coded:
+
+<div>
+<SoloEditor>
+
+```jsx
+const id = 1;
+useEffect(() => {
+  fetch(`http://localhost:3000/projects/${id}`)
+    .then((r) => r.json())
+    .then((project) => {
+      setProject(project);
+      setIsLoaded(true);
+    });
+}, [id]);
+```
+
+</SoloEditor>
+</div>
+
+Let's implement `useParams()` here to get this route working for all projects.
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
+
+--- 
+
+<!-- Begin Slide -->
+
+<Layout>
+
+### useHistory()
+
+<div>
+<SoloEditor>
+
+```jsx
+import { useHistory } from 'react-router-dom';
+
+// ...
+
+const history = useHistory();
+console.log(history);
+
+// to affect a client side redirect:
+
+history.push('new-url')
+```
+
+</SoloEditor>
+</div>
+
+-----
+
+When might we want to use a redirect for navigation instead of a link?
+
+<Steps>
+
+- When the user submits a form!
+- For our app, we can use this hook within our `ProjectEditForm` &amp; `ProjectForm` component
+- Let's go do it!
+
+</Steps>
 
 </Layout>
 
@@ -538,19 +654,7 @@ What do we need to do with the `ProjectForm`?
 
 ## 🏋️‍♂️ Exercise 🏋️‍♂️
 
-Implement Inverse Data flow with a controlled form
-
-[Open Codesandbox](https://codesandbox.io/s/form-exercise-8rlgw) - instructions in `src/App.js`
-
-<iframe src="https://codesandbox.io/embed/form-exercise-forked-8rlgw?fontsize=14&hidenavigation=1&theme=dark"
-  style={{"width":"100%", height:"500px"}}
-  title="Inverse Data Flow exercise"
-  allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-  sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-></iframe>
-
-
-
+If you'd like some additional practice with these concepts, here's <ExternalLink href="https://codesandbox.io/s/react-router-exercise-cmkpk">An Exercise on CodeSandbox</ExternalLink>
 
 <Notes>
 
@@ -564,7 +668,34 @@ Implement Inverse Data flow with a controlled form
 
 # Recap of Key Skills
 
-- introduce state to our application so that 
-  - user behavior -> update state -> React updates DOM
-- deciding what things should be state and what should be props
+<Steps>
 
+- Add `Switch` and `Route` tags to add conditional rendering based on URL
+- Add `Link` and `NavLink` tags to allow users to navigate via clicks
+- Add `useHistory()` hook to enable redirects after form submissions
+- Add `useParams()` hook to handle dynamic routes.
+
+</Steps>
+
+---
+
+<!-- Begin Slide -->
+
+<Layout>
+
+## Resources
+
+- <ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/API/History_API">HTML5 History API MDN Docs</ExternalLink>
+- <ExternalLink href="https://reacttraining.com/react-router/">React Router Website</ExternalLink>
+- <ExternalLink href="https://github.com/ReactTraining/react-router">React Router Github</ExternalLink>
+- <ExternalLink href="https://enlear.academy/whats-new-in-react-router-6-e34e451e5285">Learn more about what's new in V6</ExternalLink>
+
+</Layout>
+
+<Notes>
+
+
+
+</Notes>
+
+<!-- End Slide -->
