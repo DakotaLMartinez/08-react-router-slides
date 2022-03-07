@@ -133,9 +133,7 @@ export const theme = baseTheme;
 
 Let's try comparing the two as we naviate from page to page with the network tab set to <ExternalLink href="https://www.browserstack.com/guide/how-to-perform-network-throttling-in-chrome">throttle at slow 3g speed</ExternalLink>
 
-Enter Event number: 12326, click the enter button below to add your observations
-
-<iframe width="1000" height="700" src="https://onlinequestions.org/"></iframe>
+<img src="https://res.cloudinary.com/dnocv6uwb/image/upload/v1646676463/Ntw-Throttle-1-700x521_yp4l6u.png" alt="Enabling network throttling in Chrome" style={{width: '800px', height: '600px'}} />
 
 </Layout>
 
@@ -333,8 +331,7 @@ ReactDOM.render(
 </SoloEditor>
 </div>
 
-React Router is essentially a
-[Context Provider](https://reactjs.org/docs/context.html) that gives your other
+React Router is essentially a <ExternalLink href="https://reactjs.org/docs/context.html">Context Provider</ExternalLink> that gives your other
 components access to the history object so you have access to additional
 information to perform routing logic.
 
@@ -397,8 +394,8 @@ these different routes:
 - `Switch`: Looks through all its child Route components and returns the first
   one that matches the current URL (like a `switch` statement in JavaScript)
 - `Route`: Uses a prop of _path_ to compare with the current URL; if the path
-  matches the url, it will render a component based on its _component_ or
-  _render_ prop
+  matches the url, it will render a component based on its _component_,
+  _render_, or _children_ prop
   - Use `exact` prop if you only want exact matches!
 
 </Layout>
@@ -544,9 +541,8 @@ The two you'll most likely be using in your projects are `useHistory()` and `use
 
 ### useParams()
 
-Say I'm in this situation:
-- I'm in my browser at the following URL: `http://localhost:3000/projects/2`. 
-- I have a Route in my application with a path of `projects/:id`
+Let's say I'm in my browser at the following URL: `http://localhost:3000/projects/2`. 
+Let's also say I have a Route in my application with a path of `projects/:id`
 
 I can utilize the `useParams()` hook to retrieve that id of 2!
 
